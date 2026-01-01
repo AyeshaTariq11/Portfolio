@@ -2,14 +2,16 @@ pipeline {
     agent any 
 
     options {
-        // Prevents the pipeline from triggering itself in an infinite loop
+        // Sabse important: Ye loop ko rokta hai
         disableConcurrentBuilds()
+        timeout(time: 10, unit: 'MINUTES')
     }
 
     environment { 
         REPO_URL      = 'https://github.com/AyeshaTariq11/Portfolio' 
         SONARQUBE_ENV = 'SonarQube-Server' 
         DOCKER_SERVER = 'ubuntu@ip-172-31-20-138' 
+        SONAR_SCANNER_OPTS = "-Xmx512m" 
     } 
 
     stages { 
@@ -26,22 +28,20 @@ pipeline {
                 script { 
                     def scannerHome = tool 'SonarQube Scanner' 
                     withSonarQubeEnv("${SONARQUBE_ENV}") { 
-                        // Combined into one line to avoid backslash/syntax errors
-                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=portfolio-cloud -Dsonar.projectName=portfolio-cloud -Dsonar.sources=."
+                        // Isko aik hi line mein rakhein taake '\' wala error na aaye
+                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=portfolio-cloud -Dsonar.projectName=portfolio-cloud -Dsonar.sources=. -Dsonar.exclusions=**/node_modules/**,**/*.png -Dsonar.scm.disabled=true"
                     }
-                    // We omit 'waitForQualityGate()' to ensure the pipeline doesn't stop
                 }  
             } 
         } 
 
         stage('Docker Build & Deploy') { 
             steps { 
-                sshagent(['docker-server-ssh']) { 
+                // Ensure karein ke 'docker-credentials' ka ID Jenkins mein sahi hai
+                sshagent(['docker-credentials']) { 
                     sh """
-                    # 1. Transfer files to remote server
                     scp -o StrictHostKeyChecking=no index.html Dockerfile ${DOCKER_SERVER}:/home/ubuntu/
                     
-                    # 2. Run remote commands using double quotes for better stability
                     ssh -o StrictHostKeyChecking=no ${DOCKER_SERVER} "
                         cd /home/ubuntu
                         docker build -t portfolio-app .
@@ -56,11 +56,7 @@ pipeline {
     } 
 
     post { 
-        success { 
-            echo "Deployment Successful: http://172.31.26.188" 
-        } 
-        failure { 
-            echo "Pipeline Failed - Check the console output for specific errors." 
-        } 
+        success { echo "Done!" }
+        failure { echo "Failed!" }
     } 
 }
