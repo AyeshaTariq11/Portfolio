@@ -1,170 +1,265 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>My Website</title>
-<style>
-  body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayesha Tariq | Portfolio</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* --- CSS STYLES --- */
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+        }
 
-nav {
-  background: #222;
-  color: white;
-  padding: 15px;
-  display: flex;
-  justify-content: space-between;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-nav ul {
-  list-style: none;
-  display: flex;
-}
+        body {
+            background-color: var(--bg-light);
+            color: var(--secondary-color);
+            line-height: 1.6;
+        }
 
-nav ul li {
-  margin-left: 15px;
-}
+        /* Header / Navbar */
+        nav {
+            background: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
 
-nav ul li a {
-  color: white;
-  text-decoration: none;
-}
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
 
-.hero {
-  background: #f4f4f4;
-  padding: 80px;
-  text-align: center;
-}
+        .nav-links a {
+            text-decoration: none;
+            color: var(--secondary-color);
+            margin-left: 2rem;
+            font-weight: 500;
+            transition: 0.3s;
+        }
 
-section {
-  padding: 40px;
-  text-align: center;
-}
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
 
-.card-container {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
-}
+        /* Hero Section */
+        .hero {
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: white;
+            padding: 0 20px;
+        }
 
-.card {
-  background: #fff;
-  padding: 20px;
-  width: 220px;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-}
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
 
-.btn {
-  background: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 18px;
-  margin: 8px;
-  cursor: pointer;
-  border-radius: 4px;
-}
+        .hero p {
+            font-size: 1.2rem;
+            color: #cbd5e1;
+            max-width: 600px;
+        }
 
-.btn:hover {
-  background: #0056b3;
-}
+        /* Sections */
+        .container {
+            max-width: 1100px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
 
-.btn.outline {
-  background: transparent;
-  color: #007bff;
-  border: 2px solid #007bff;
-}
+        h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
 
-.btn.small {
-  padding: 6px 12px;
-  font-size: 14px;
-}
+        h2::after {
+            content: '';
+            width: 50px;
+            height: 4px;
+            background: var(--primary-color);
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
 
-footer {
-  background: #222;
-  color: white;
-  text-align: center;
-  padding: 10px;
-}
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
 
-</style>
+        .skill-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .skill-card i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Projects */
+        .project-card {
+            background: white;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .badge {
+            background: #dbeafe;
+            color: var(--primary-color);
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            background: #1e293b;
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 1rem;
+            transition: 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .project-card { flex-direction: column; }
+        }
+    </style>
 </head>
 <body>
 
-  <nav>
-    <h2>MySite</h2>
-    <ul>
-      <li><a href="#home">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
+    <nav>
+        <div class="logo">Ayesha Tariq</div>
+        <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
 
-  <section id="home" class="hero">
-    <h1>Welcome to My Website</h1>
-    <p>Frontend website deployed on AWS EC2 🚀</p>
-    <button class="btn">Get Started</button>
-    <button class="btn outline">Learn More</button>
-  </section>
+    <section class="hero">
+        <h1>Cloud & DevOps Engineer</h1>
+        <p>Specializing in CI/CD pipelines, Automation, and Infrastructure as Code. Turning complex deployments into one-click solutions.</p>
+    </section>
 
-  <section id="about">
-    <h2>About Me</h2>
-    <p>
-      I am a student learning frontend development.
-      This website is hosted on AWS EC2.
-    </p>
-  </section>
-
-  <section id="services">
-    <h2>My Services</h2>
-    <div class="card-container">
-      <div class="card">
-        <h3>Web Design</h3>
-        <p>Modern and responsive designs.</p>
-        <button class="btn small">View</button>
-      </div>
-      <div class="card">
-        <h3>Frontend</h3>
-        <p>HTML, CSS, JavaScript based UI.</p>
-        <button class="btn small">View</button>
-      </div>
-      <div class="card">
-        <h3>Deployment</h3>
-        <p>Deploy frontend on AWS EC2.</p>
-        <button class="btn small">View</button>
-      </div>
+    <div class="container" id="about">
+        <h2>About Me</h2>
+        <p style="text-align: center; max-width: 800px; margin: 0 auto;">
+            I am a passionate DevOps Engineer with experience in automating software delivery processes. 
+            I love working with tools like Jenkins, Docker, and SonarQube to ensure high-quality code and seamless deployments.
+        </p>
     </div>
-  </section>
 
-  <section id="projects">
-    <h2>My Projects</h2>
-    <div class="card-container">
-      <div class="card">
-        <h3>Portfolio</h3>
-        <p>Personal portfolio website.</p>
-        <button class="btn small">Open</button>
-      </div>
-      <div class="card">
-        <h3>College Project</h3>
-        <p>Frontend for academic project.</p>
-        <button class="btn small">Open</button>
-      </div>
+    <div class="container" id="skills">
+        <h2>Technical Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <i class="fab fa-docker"></i>
+                <p>Docker</p>
+            </div>
+            <div class="skill-card">
+                <i class="fab fa-jenkins"></i>
+                <p>Jenkins</p>
+            </div>
+            <div class="skill-card">
+                <i class="fab fa-aws"></i>
+                <p>AWS</p>
+            </div>
+            <div class="skill-card">
+                <i class="fas fa-code"></i>
+                <p>SonarQube</p>
+            </div>
+            <div class="skill-card">
+                <i class="fab fa-git-alt"></i>
+                <p>Git</p>
+            </div>
+        </div>
     </div>
-  </section>
 
-  <section id="contact">
-    <h2>Contact Me</h2>
-    <p>Email: example@gmail.com</p>
-    <button class="btn">Send Email</button>
-  </section>
+    <div class="container" id="projects">
+        <h2>Recent Projects</h2>
+        <div class="project-card">
+            <div class="project-content">
+                <span class="badge">Success</span>
+                <h3 style="margin-top: 1rem;">Portfolio CI/CD Pipeline</h3>
+                <p style="color: var(--text-light); margin: 1rem 0;">
+                    Automated deployment of this portfolio using Jenkins, Docker, and SonarQube. 
+                    The project includes code analysis and automated SSH deployment to EC2.
+                </p>
+                <div class="social-links" style="text-align: left; margin: 0;">
+                    <a href="#" style="color: var(--primary-color); font-size: 1rem;"><i class="fab fa-github"></i> View Source</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-  <footer>
-    <p>© 2025 My Website</p>
-  </footer>
+    <footer id="contact">
+        <h3>Get In Touch</h3>
+        <p style="margin-bottom: 1.5rem;">Let's build something amazing together.</p>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="mailto:ayesha@example.com"><i class="fas fa-envelope"></i></a>
+        </div>
+        <p style="margin-top: 2rem; font-size: 0.8rem; opacity: 0.6;">&copy; 2026 Ayesha Tariq. All Rights Reserved.</p>
+    </footer>
 
 </body>
 </html>
