@@ -1,0 +1,70 @@
+pipeline { 
+    agent any 
+
+    options {
+        // Prevents a loop by ensuring only one instance of this pipeline runs at a time
+        disableConcurrentBuilds()
+    }
+
+    environment { 
+        REPO_URL      = 'https://github.com/AyeshaTariq11/webhtml.git' 
+        SONARQUBE_ENV = 'SonarQube-Server' 
+        DOCKER_SERVER = 'ubuntu@ip-172-31-20-138' 
+    } 
+
+    stages { 
+        stage('Checkout Code') { 
+            steps { 
+                git branch: 'master', 
+                    url: "${REPO_URL}", 
+                    credentialsId: 'github-credentials' 
+            } 
+        } 
+
+        stage('SonarQube Analysis') { 
+            steps { 
+                script { 
+                    def scannerHome = tool 'SonarQube Scanner' 
+                    // Quality Gate is effectively disabled by NOT including 'waitForQualityGate()'
+                    withSonarQubeEnv("${SONARQUBE_ENV}") { 
+                        sh """ 
+                        ${scannerHome}/bin/sonar-scanner \ 
+                        -Dsonar.projectKey=portfolio-cloud \ 
+                        -Dsonar.projectName=portfolio-cloud \ 
+                        -Dsonar.sources=. 
+                        """ 
+                    } 
+                }  
+            } 
+        } 
+
+        stage('Docker Build & Deploy') { 
+            steps { 
+                sshagent(['docker-server-ssh']) { 
+                    sh """ 
+                    # Transfer necessary files
+                    scp -o StrictHostKeyChecking=no index.html Dockerfile ${DOCKER_SERVER}:/home/ubuntu/ 
+                    
+                    # Execute remote commands using double quotes to allow variable expansion if needed
+                    ssh -o StrictHostKeyChecking=no ${DOCKER_SERVER} "
+                        cd /home/ubuntu
+                        docker build -t portfolio-app .
+                        docker stop portfolio-app || true
+                        docker rm portfolio-app || true
+                        docker run -d -p 80:80 --name portfolio-app portfolio-app
+                    "
+                    """ 
+                } 
+            } 
+        } 
+    } 
+
+    post { 
+        success { 
+            echo "Deployment Successful: http://172.31.26.188" 
+        } 
+        failure { 
+            echo "Pipeline Failed" 
+        } 
+    } 
+}

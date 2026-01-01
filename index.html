@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Website</title>
+<style>
+  body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+nav {
+  background: #222;
+  color: white;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+}
+
+nav ul li {
+  margin-left: 15px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+.hero {
+  background: #f4f4f4;
+  padding: 80px;
+  text-align: center;
+}
+
+section {
+  padding: 40px;
+  text-align: center;
+}
+
+.card-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: #fff;
+  padding: 20px;
+  width: 220px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  margin: 8px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.btn:hover {
+  background: #0056b3;
+}
+
+.btn.outline {
+  background: transparent;
+  color: #007bff;
+  border: 2px solid #007bff;
+}
+
+.btn.small {
+  padding: 6px 12px;
+  font-size: 14px;
+}
+
+footer {
+  background: #222;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+</style>
+</head>
+<body>
+
+  <nav>
+    <h2>MySite</h2>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section id="home" class="hero">
+    <h1>Welcome to My Website</h1>
+    <p>Frontend website deployed on AWS EC2 🚀</p>
+    <button class="btn">Get Started</button>
+    <button class="btn outline">Learn More</button>
+  </section>
+
+  <section id="about">
+    <h2>About Me</h2>
+    <p>
+      I am a student learning frontend development.
+      This website is hosted on AWS EC2.
+    </p>
+  </section>
+
+  <section id="services">
+    <h2>My Services</h2>
+    <div class="card-container">
+      <div class="card">
+        <h3>Web Design</h3>
+        <p>Modern and responsive designs.</p>
+        <button class="btn small">View</button>
+      </div>
+      <div class="card">
+        <h3>Frontend</h3>
+        <p>HTML, CSS, JavaScript based UI.</p>
+        <button class="btn small">View</button>
+      </div>
+      <div class="card">
+        <h3>Deployment</h3>
+        <p>Deploy frontend on AWS EC2.</p>
+        <button class="btn small">View</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2>My Projects</h2>
+    <div class="card-container">
+      <div class="card">
+        <h3>Portfolio</h3>
+        <p>Personal portfolio website.</p>
+        <button class="btn small">Open</button>
+      </div>
+      <div class="card">
+        <h3>College Project</h3>
+        <p>Frontend for academic project.</p>
+        <button class="btn small">Open</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact Me</h2>
+    <p>Email: example@gmail.com</p>
+    <button class="btn">Send Email</button>
+  </section>
+
+  <footer>
+    <p>© 2025 My Website</p>
+  </footer>
+
+</body>
+</html>
