@@ -1,7 +1,7 @@
 pipeline { 
     agent any 
     environment { 
-        REPO_URL      = 'https://github.com/AyeshaTariq11/Portfolio.git' 
+        REPO_URL      = 'https://github.com/AyeshaTariq11/Portfolio' 
         SONARQUBE_ENV = 'SonarQube-Server' 
         DOCKER_SERVER = 'ubuntu@ip-172-31-20-138' 
     } 
