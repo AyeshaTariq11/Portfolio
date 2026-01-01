@@ -2,12 +2,12 @@ pipeline {
     agent any 
 
     options {
-        // Prevents a loop by ensuring only one instance of this pipeline runs at a time
+        // Prevents the pipeline from triggering itself in a loop
         disableConcurrentBuilds()
     }
 
     environment { 
-        REPO_URL      = 'https://github.com/AyeshaTariq11/webhtml.git' 
+        REPO_URL      = 'https://github.com/AyeshaTariq11/Portfolio.git'
         SONARQUBE_ENV = 'SonarQube-Server' 
         DOCKER_SERVER = 'ubuntu@ip-172-31-20-138' 
     } 
@@ -25,15 +25,11 @@ pipeline {
             steps { 
                 script { 
                     def scannerHome = tool 'SonarQube Scanner' 
-                    // Quality Gate is effectively disabled by NOT including 'waitForQualityGate()'
                     withSonarQubeEnv("${SONARQUBE_ENV}") { 
-                        sh """ 
-                        ${scannerHome}/bin/sonar-scanner \ 
-                        -Dsonar.projectKey=portfolio-cloud \ 
-                        -Dsonar.projectName=portfolio-cloud \ 
-                        -Dsonar.sources=. 
-                        """ 
-                    } 
+                        // Fixed the backslash syntax error by joining the command
+                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=portfolio-cloud -Dsonar.projectName=portfolio-cloud -Dsonar.sources=."
+                    }
+                    // Quality Gate is skipped because waitForQualityGate() is NOT present
                 }  
             } 
         } 
@@ -41,11 +37,9 @@ pipeline {
         stage('Docker Build & Deploy') { 
             steps { 
                 sshagent(['docker-server-ssh']) { 
-                    sh """ 
-                    # Transfer necessary files
-                    scp -o StrictHostKeyChecking=no index.html Dockerfile ${DOCKER_SERVER}:/home/ubuntu/ 
+                    sh """
+                    scp -o StrictHostKeyChecking=no index.html Dockerfile ${DOCKER_SERVER}:/home/ubuntu/
                     
-                    # Execute remote commands using double quotes to allow variable expansion if needed
                     ssh -o StrictHostKeyChecking=no ${DOCKER_SERVER} "
                         cd /home/ubuntu
                         docker build -t portfolio-app .
@@ -53,7 +47,7 @@ pipeline {
                         docker rm portfolio-app || true
                         docker run -d -p 80:80 --name portfolio-app portfolio-app
                     "
-                    """ 
+                    """
                 } 
             } 
         } 
